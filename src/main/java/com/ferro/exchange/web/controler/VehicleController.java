@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.http.ResponseEntity.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/v1/vehicles")
 public class VehicleController {
