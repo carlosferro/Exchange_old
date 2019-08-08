@@ -25,7 +25,6 @@ import java.util.Map;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@CrossOrigin
 @RequestMapping(value="/auth")
 public class PublicUserController {
 
