@@ -5,6 +5,6 @@ public class VehicleNotFoundException extends RuntimeException {
     }
 
     public VehicleNotFoundException(Long vehicleId ) {
-        super("Vehicle: " +vehicleId +" not found.");
+        super("Vehicle: " + vehicleId +" not found.");
     }
 }

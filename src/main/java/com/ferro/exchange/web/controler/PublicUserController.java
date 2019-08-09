@@ -3,6 +3,7 @@ package com.ferro.exchange.web.controler;
 import com.ferro.exchange.domain.User;
 import com.ferro.exchange.repository.UserRepository;
 import com.ferro.exchange.security.jwt.JwtTokenProvider;
+import com.ferro.exchange.web.InvalidUsernameException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -69,24 +70,28 @@ public class PublicUserController {
     public ResponseEntity register(@RequestBody AuthenticationRequest data) {
 
         User user = User.builder()
-                .username("user")
+                .username(data.getUsername())
                 .password(this.passwordEncoder.encode("password"))
                 .roles(Arrays.asList("ROLE_USER"))
                 .build();
 
-        users.save(user);
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), data.getPassword()));
-        // TODO: Assume the will always find user
-        String token = jwtTokenProvider.createToken(user.getUsername(),
-                this.users.findByUsername(user.getUsername())
-                        .orElseThrow(() -> new UsernameNotFoundException(
-                                "Username " + user.getUsername() + "not found")).getRoles());
+        if(!users.findByUsername(data.getUsername()).isPresent()){
+            users.save(user);
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), data.getPassword()));
+            // TODO: Assume the will always find user
+            String token = jwtTokenProvider.createToken(user.getUsername(),
+                    this.users.findByUsername(user.getUsername())
+                            .orElseThrow(() -> new UsernameNotFoundException(
+                                    "Username " + user.getUsername() + "not found")).getRoles());
 
-        Map<Object, Object> model = new HashMap<>();
-        model.put("username", user.getUsername());
-        model.put("token", token);
-        return ok(model);
+            Map<Object, Object> model = new HashMap<>();
+            model.put("username", user.getUsername());
+            model.put("token", token);
+            return ok(model);
+        } else {
+            throw new InvalidUsernameException(data.getUsername());
+        }
     }
 
     @Data

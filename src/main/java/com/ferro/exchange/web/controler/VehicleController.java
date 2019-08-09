@@ -19,14 +19,18 @@ import static org.springframework.http.ResponseEntity.*;
 @RestController
 @RequestMapping("/v1/vehicles")
 public class VehicleController {
+
     private VehicleRepository vehicles;
+
     public VehicleController(VehicleRepository vehicles) {
         this.vehicles = vehicles;
     }
+
     @GetMapping("")
     public ResponseEntity all() {
         return ok(this.vehicles.findAll());
     }
+
     @PostMapping("")
     public ResponseEntity save(@RequestBody VehicleForm form, HttpServletRequest request) {
         Vehicle saved = this.vehicles.save(Vehicle.builder().name(form.getName()).build());
@@ -38,10 +42,12 @@ public class VehicleController {
                         .toUri())
                 .build();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         return ok(this.vehicles.findById(id).orElseThrow(() -> new VehicleNotFoundException()));
     }
+
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody VehicleForm form) {
         Vehicle existed = this.vehicles.findById(id).orElseThrow(() -> new VehicleNotFoundException());
@@ -49,6 +55,7 @@ public class VehicleController {
         this.vehicles.save(existed);
         return noContent().build();
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Vehicle existed = this.vehicles.findById(id).orElseThrow(() -> new VehicleNotFoundException());
