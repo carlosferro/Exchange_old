@@ -71,7 +71,7 @@ public class PublicUserController {
 
         User user = User.builder()
                 .username(data.getUsername())
-                .password(this.passwordEncoder.encode("password"))
+                .password(this.passwordEncoder.encode(data.password))
                 .roles(Arrays.asList("ROLE_USER"))
                 .build();
 
@@ -79,7 +79,7 @@ public class PublicUserController {
             users.save(user);
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), data.getPassword()));
-            // TODO: Assume the will always find user
+            // TODO: Assume that will always find user?
             String token = jwtTokenProvider.createToken(user.getUsername(),
                     this.users.findByUsername(user.getUsername())
                             .orElseThrow(() -> new UsernameNotFoundException(
