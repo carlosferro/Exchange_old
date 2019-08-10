@@ -27,7 +27,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/auth")
+@RequestMapping(value = "/auth")
 public class PublicUserController {
 
     @Autowired
@@ -75,7 +75,7 @@ public class PublicUserController {
                 .roles(Arrays.asList("ROLE_USER"))
                 .build();
 
-        if(!users.findByUsername(data.getUsername()).isPresent()){
+        if (!users.findByUsername(data.getUsername()).isPresent()) {
             users.save(user);
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), data.getPassword()));
@@ -92,6 +92,12 @@ public class PublicUserController {
         } else {
             throw new InvalidUsernameException(data.getUsername());
         }
+    }
+
+    // Used to keep heroku server awake
+    @GetMapping("/keepawake")
+    public String keepAwake() {
+        return "awake";
     }
 
     @Data
