@@ -46,8 +46,9 @@ public class OrderBook {
                 }
             }
             bids.addLast(new PriceLevel(order));
+        }else {
+            bids.addFirst(new PriceLevel(order));
         }
-        bids.addFirst(new PriceLevel(order));
     }
 
     public void addAsk(Order order) {
@@ -79,8 +80,9 @@ public class OrderBook {
                 }
             }
             asks.addLast(new PriceLevel(order));
+        }else {
+            asks.addFirst(new PriceLevel(order));
         }
-        asks.addFirst(new PriceLevel(order));
     }
 
     public boolean deleteBid(Order order) {
