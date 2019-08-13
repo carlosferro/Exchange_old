@@ -1,12 +1,21 @@
 package com.ferro.exchange.domain.orderbook;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "orders")
 @Data
-//@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue
@@ -15,13 +24,4 @@ public class Order {
     private long volume;
     private OrderSide side;
 //    private User user;
-
-    protected Order() {
-    }
-
-    public Order(long price, long volume) {
-        this.price = price;
-        this.volume = volume;
-//        this.user = user;
-    }
 }

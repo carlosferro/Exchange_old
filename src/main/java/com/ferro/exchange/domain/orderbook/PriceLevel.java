@@ -1,6 +1,8 @@
 package com.ferro.exchange.domain.orderbook;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.LinkedList;
 
@@ -9,6 +11,7 @@ public class PriceLevel {
 
     private final long price;
     private long volume;
+//    @JsonIgnore
     private final LinkedList<Order> orders;
 
     protected PriceLevel(long price) {
