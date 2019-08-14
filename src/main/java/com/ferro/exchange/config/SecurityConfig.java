@@ -35,13 +35,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/order/orderbook").permitAll()
-                .antMatchers("/order/create").permitAll()
                 .antMatchers(HttpMethod.GET, "/vehicles/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/v1/vehicles/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtConfigurer(jwtTokenProvider));
+                .apply(new JwtConfigurer(jwtTokenProvider))
+                .and().cors();
         //@formatter:on
 
         // to enable h2 web console
