@@ -1,4 +1,4 @@
 # Exchange
 
-Developing an exchange model using Spring Boot for study purposes.
+Developmentof an exchange model using Spring Boot for study purposes.
 
