@@ -1,3 +1,4 @@
 # Exchange
 
-Development of an exchange model using Spring.
+Developing an exchange model using Spring Boot for study purposes.
+
